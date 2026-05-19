@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Документация API</h2>
+
+<h3>Пользователи</h3>
+<ul>
+    <li><strong>GET /api/users</strong> — получить список всех пользователей</li>
+    <li><strong>POST /api/users</strong> — создать нового пользователя
+        <ul>
+            <li>Параметры: <code>username</code>, <code>email</code>, <code>password</code></li>
+        </ul>
+    </li>
+</ul>
+
+<h3>Задачи</h3>
+<ul>
+    <li><strong>GET /api/tasks</strong> — получить все задачи</li>
+    <li><strong>GET /api/users/<user_id>/tasks</strong> — задачи конкретного пользователя</li>
+    <li><strong>POST /api/tasks</strong> — создать новую задачу
+        <ul>
+            <li>Параметры: <code>title</code>, <code>description</code>, <code>status</code>,
+                <code>priority</code>, <code>due_date</code> (ISO формат), <code>user_id</code></li>
+        </ul>
+    </li>
+    <li><strong>GET /api/tasks/<task_id></strong> — получить задачу по ID</li>
+    <li><strong>PUT /api/tasks/<task_id></strong> — обновить задачу (передаются только изменяемые поля)</li>
+    <li><strong>DELETE /api/tasks/<task_id></strong> — удалить задачу</li>
+</ul>
+
+<h3>Примеры запросов</h3>
+<pre>
+# Получить всех пользователей
+curl -X GET http://localhost:5000/api/users
+
+# Создать задачу
+curl -X POST http://localhost:5000/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Новая задача",
+    "description": "Описание задачи",
+    "status": "pending",
+    "priority": 3,
+    "due_date": "2024-12-31T23:59:59",
+    "user_id": 1
+  }'
+</pre>
+
+<h3>Коды ответов</h3>
+<ul>
+    <li>200 — Успешно</li>
+    <li>201 — Создано</li>
+    <li>400 — Неверный запрос</li>
+    <li>404 — Ресурс не найден</li>
+    <li>500 — Внутренняя ошибка сервера</li>
+</ul>
+{% endblock %}

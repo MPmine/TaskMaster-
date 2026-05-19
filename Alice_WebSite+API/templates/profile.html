@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+<h1>Профиль пользователя</h1>
+
+<div style="max-width: 500px; margin: 2rem auto;">
+    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+        <div style="margin-bottom: 1.5rem;">
+            <strong>Имя пользователя:</strong>
+            <span style="margin-left: 1rem;">{{ user.username }}</span>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <strong>Email:</strong>
+            <span style="margin-left: 1rem;">{{ user.email }}</span>
+        </div>
+        <div>
+            <a href="{{ url_for('logout') }}" class="btn btn-primary">Выйти из системы</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

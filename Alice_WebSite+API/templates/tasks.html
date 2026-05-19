@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Мои задачи{% endblock %}
+
+{% block content %}
+<h1>Мои задачи</h1>
+<a href="{{ url_for('new_task') }}" class="btn btn-primary" style="margin-bottom: 2rem;">Добавить задачу</a>
+
+
+{% if tasks %}
+    <div class="tasks-list">
+        {% for task in tasks %}
+        <div class="task-item">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 class="task-title">{{ task.title }}</h3>
+                    {% if task.description %}
+                        <p>{{ task.description }}</p>
+                    {% endif %}
+                </div>
+                <div style="text-align: right;">
+                    <span class="task-status status-{{ task.status }}">
+                {% if task.status == 'pending' %}В работе{% else %}Завершена{% endif %}
+            </span>
+                    {% if task.priority %}
+                <div style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">
+                    Приоритет:
+            {% if task.priority == 1 %}Низкий
+            {% elif task.priority == 2 %}Средний
+            {% else %}Высокий{% endif %}
+        </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 3rem; background: white; border-radius: 12px; margin-top: 2rem;">
+    <h3>Список задач пуст</h3>
+    <p>Начните с добавления новой задачи!</p>
+</div>
+{% endif %}
+{% endblock %}

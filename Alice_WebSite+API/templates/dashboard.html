@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Дашборд{% endblock %}
+
+
+{% block content %}
+<h1>Добро пожаловать, {{ current_user.username }}!</h1>
+
+<div style="text-align: center; margin: 2rem 0;">
+    <a href="{{ url_for('new_task') }}" class="btn btn-primary">Добавить новую задачу</a>
+</div>
+
+
+{% if tasks %}
+    <div class="tasks-list">
+        {% for task in tasks %}
+        <div class="task-item">
+            <h3 class="task-title">{{ task.title }}</h3>
+            {% if task.description %}
+                <p>{{ task.description }}</p>
+            {% endif %}
+            <div>
+                <span class="task-status status-{{ task.status }}">
+                    {% if task.status == 'pending' %}В работе{% else %}Завершена{% endif %}
+                </span>
+                {% if task.priority %}
+                    <span style="margin-left: 1rem; color: #666;">
+                Приоритет:
+                {% if task.priority == 1 %}Низкий
+                {% elif task.priority == 2 %}Средний
+                {% else %}Высокий{% endif %}
+            </span>
+                {% endif %}
+            {% if task.due_date %}
+                <span style="margin-left: 1rem; color: #888;">
+        Срок: {{ task.due_date.strftime('%d.%m.%Y') if task.due_date else '' }}
+                </span>
+            {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="text-align: center; padding: 3rem; background: white; border-radius: 12px;">
+        <h3>У вас пока нет задач</h3>
+        <p>Нажмите кнопку выше, чтобы добавить первую задачу!</p>
+    </div>
+{% endif %}
+{% endblock %}
